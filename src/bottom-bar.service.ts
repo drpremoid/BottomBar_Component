@@ -93,8 +93,8 @@ export class BottomBarService implements OnInit{
     //if link is a string - assume nav link
     if(typeof tab.link == 'string') {
        this.router.navigate([tab.link]);
-    } else if (tab.link == 'function') {
-  	tab.link.call();
+    } else if (typeof tab.link == 'function') {
+  	  tab.link.call();
     } else {
       throw new Error('NavBar link type is invalid');
     }
