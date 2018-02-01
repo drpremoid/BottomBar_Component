@@ -1,7 +1,7 @@
 export interface NavTab {
   title: string;
   icon: string;
-  link: string;
+  link: any;
   state:string;
   backgroundColor:string;
 }

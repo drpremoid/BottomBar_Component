@@ -2,7 +2,7 @@ import {Injectable, Input, OnInit} from '@angular/core';
 import {NavTab} from "./bottom-nav-item/nav-tab";
 import {Subject} from "rxjs/Subject";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-
+import {Router} from "@angular/router";
 
 @Injectable()
 export class BottomBarService implements OnInit{
@@ -44,7 +44,7 @@ export class BottomBarService implements OnInit{
    */
   private auxOldTab : NavTab = null;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -90,7 +90,15 @@ export class BottomBarService implements OnInit{
 
     tab.state = (tab.state === 'active') ? 'inactive' : 'active';
     this.auxOldTab = tab;
-  }
+    //if link is a string - assume nav link
+    if(typeof tab.link == 'string') {
+       this.router.navigate([tab.link]);
+    } else if (tab.link == 'function') {
+  	tab.link.call();
+    } else {
+      throw new Error('NavBar link type is invalid');
+    }
+ }
 
   /**
    * Set method for changing the color of the botton bar
